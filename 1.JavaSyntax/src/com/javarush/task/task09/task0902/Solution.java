@@ -7,7 +7,7 @@ package com.javarush.task.task09.task0902;
 public class Solution {
     public static void main(String[] args) throws Exception {
         //System.out.println(method1());
-       // method1();
+        method1();
 
     }
 
@@ -42,11 +42,11 @@ public class Solution {
 
     public static String method5() {
         //напишите тут ваш код
-        printStackTrace(Thread.currentThread().getStackTrace());
+        //printStackTrace(Thread.currentThread().getStackTrace());
 
         return Thread.currentThread().getStackTrace()[2].getMethodName();
     }
-
+    /*
     public static void printStackTrace (StackTraceElement[] st) {
         System.out.println("Текущий метод: " + st[1].getMethodName());
         System.out.println("Размер стека элементов: "+st.length);
@@ -57,5 +57,5 @@ public class Solution {
         }
         System.out.println("===============================");
         System.out.println("");
-    }
+    }*/
 }
