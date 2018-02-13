@@ -1,3 +1,7 @@
 JavaRushPlugin.properties
 *.iml
 out.log
+*.xml
+*.log
+out.log.1
+misc.xml
