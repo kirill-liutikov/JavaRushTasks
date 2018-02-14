@@ -29,8 +29,7 @@ public class Calculator {
 
     public static double percent(int a, int b) {
         //напишите тут ваш код
-        double one_prc = a/100;
-        return one_prc * b;
+         return  (( double) (a) )/100 * b;
     }
 
     public static void main(String[] args) {
