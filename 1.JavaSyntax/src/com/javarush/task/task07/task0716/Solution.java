@@ -17,6 +17,15 @@ public class Solution {
         list.add("роза"); //0
         list.add("лоза"); //1
         list.add("лира"); //2
+        list.add("роза"); //0
+        list.add("лоза"); //1
+        list.add("лира"); //2
+        list.add("роза"); //0
+        list.add("лоза"); //1
+        list.add("лира"); //2
+        list.add("роза"); //0
+        list.add("лоза"); //1
+        list.add("лира"); //2
         list = fix(list);
 
         for (String s : list) {
@@ -26,28 +35,25 @@ public class Solution {
 
     public static ArrayList<String> fix(ArrayList<String> list) {
         //напишите тут ваш код
-        int a = list.size();
-
         Iterator<String> i =  list.iterator();
-
 
         while (i.hasNext()) {
 
-        //String s = i.next();
+        String s = i.next();
 
-            //if (s.contains("р") && s.contains("л")&&i.hasNext()) {
-            //}
-            //if (s.contains("р")&&i.hasNext()) {
-            //    i.remove();
-            //}
-            //if (i.next().contains("л")) {
-            //    list.add(i.next());
-            //}
-            System.out.println(i);
+        if (s.contains("р") && !s.contains("л")) {
+                i.remove();}
 
         }
 
+        int a = list.size();
 
+        for (int j = 0; j < a; j++) {
+            String s = list.get(j);
+            if (s.contains("л") && !s.contains("р")) {
+                list.add(s);
+            }
+        }
 
         return list;
     }
