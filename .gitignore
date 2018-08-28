@@ -5,3 +5,5 @@ out.log
 *.log
 out.log.1
 misc.xml
+/out
+.idea
