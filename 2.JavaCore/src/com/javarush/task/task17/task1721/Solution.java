@@ -49,11 +49,23 @@ public class Solution {
             e.printStackTrace();
         }
 
+        Solution solution = new Solution();
+
+        try {
+            solution.joinData();
+        } catch (CorruptedDataException e) {
+            e.printStackTrace();
+        }
         //() -> joinData();
 
     }
 
     public void joinData () throws CorruptedDataException {
-
+        if (allLines.containsAll(forRemoveLines)) {
+            allLines.removeAll(forRemoveLines);
+        } else {
+            allLines.clear();
+            throw new CorruptedDataException();
+        }
     }
 }
