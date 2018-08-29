@@ -16,9 +16,15 @@ public class Solution {
         counter3.start();
         counter4.start();
 
+        counter1.join();
+        //counter2.join();
+        //counter3.join();
+        //counter4.join();
+
         for (int i = 1; i <= 100; i++) {
             if (values[i] != 1) {
                 System.out.println("Массив values содержит элементы неравные 1");
+                System.out.println(i);
                 break;
             }
         }
@@ -30,6 +36,8 @@ public class Solution {
     static {
         for (int i = 0; i < 105; i++) {
             values[i] = 0;
+            //System.out.println(values[i]);
+            System.out.println(getCount()+ " "+ values[getCount()]);
         }
     }
 
@@ -48,10 +56,11 @@ public class Solution {
                 synchronized (this) {
                     incrementCount();
                     values[getCount()]++;
+
                 }
 
                 try {
-                    Thread.sleep(1);
+                    Thread.sleep(100);
                 } catch (InterruptedException e) {
                 }
             } while (getCount() < 100);
