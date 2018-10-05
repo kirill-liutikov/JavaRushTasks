@@ -8,37 +8,42 @@ import java.io.*;
 
 public class Solution {
 
-    private static void encodeFile(String fileName, String fileOutputName) {
+
+    private static void encodeFile(String fileName, String fileOutputName) throws IOException {
         //method for encode file
+        FileInputStream fileInputStream = new FileInputStream(fileName);
+        FileOutputStream fileOutputStream = new FileOutputStream(fileOutputName);
+
+        while (fileInputStream.available() > 0) {
+            int b = fileInputStream.read();
+            fileOutputStream.write(b+1);
+        }
+        fileInputStream.close();
+        fileOutputStream.close();
     }
 
-    private static void decodeFile() {
+    private static void decodeFile(String fileName, String fileOutputName) throws IOException {
+        FileInputStream fileInputStream = new FileInputStream(fileName);
+        FileOutputStream fileOutputStream = new FileOutputStream(fileOutputName);
 
+        while (fileInputStream.available() > 0) {
+            int b = fileInputStream.read();
+            fileOutputStream.write(b-1);
+        }
+        fileInputStream.close();
+        fileOutputStream.close();
     }
 
 
     public static void main(String[] args) throws IOException {
 
+        String parameter = args[0];
         String fileName = args[1];
         String fileOutputName = args[2];
 
-        //File fileIn = new File(args[1]);
-        //File fileOut = new File(args[2]);
+        if (parameter.equals("-e")) {
+           encodeFile(fileName, fileOutputName);
+        } else decodeFile(fileName, fileOutputName);
 
-        FileInputStream fis = new FileInputStream(args[1]);
-        FileOutputStream fos = new FileOutputStream(args[2]);
-
-        //int b = fis.read();
-
-        while (fis.available() > 0) {
-            int b = fis.read();
-            fos.write(b+1);
-        }
-
-
-        System.out.println(args[0]);
-        System.out.println(args[1]);
-        System.out.println(args[2]);
     }
-
 }
