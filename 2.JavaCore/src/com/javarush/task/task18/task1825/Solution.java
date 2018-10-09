@@ -32,7 +32,7 @@ public class Solution {
         for (String line : list) {
             Matcher matcher = partFile.matcher(line);
             if (matcher.find()) {
-                System.out.println("Find: " + matcher.group());
+                System.out.println("Find part: " + matcher.group());
                 map.put(Integer.parseInt(matcher.group()), line);
             }
         }
@@ -40,17 +40,22 @@ public class Solution {
         Pattern filePath = Pattern.compile(".*\\\\");
 
         //Path test = Paths.get(map.get(0));
-        //String path = test.get
-
-        for (Map.Entry m : map.entrySet()) {
-            //System.out.println(m.getValue().toString());
-            Matcher matcher = filePath.matcher(m.getValue().toString());
-            if (matcher.find())
-            {
-                System.out.println("Find2:" +" "+matcher.group()); //Нашли
-            }
+        //String path = filePath.matcher(map.get(0)).group();
+        Map.Entry mn = map.entrySet().iterator().next();
+        Matcher matcher1 = filePath.matcher(mn.getValue().toString());
+        if (matcher1.find()) {
+            String path = matcher1.group();
+            System.out.println(path);
         }
 
+        //for (Map.Entry m : map.entrySet()) {
+        //    //System.out.println(m.getValue().toString());
+        //    Matcher matcher = filePath.matcher(m.getValue().toString());
+        //    if (matcher.find())
+        //    {
+        //        System.out.println("Find path:" +" "+matcher.group()); //Нашли
+        //    }
+        //}
 
 
 
@@ -58,6 +63,7 @@ public class Solution {
         dir.mkdirs();
         File tmp = new File(dir, "tmp.txt");
         tmp.createNewFile();
+
 
 
         //String filePath =
