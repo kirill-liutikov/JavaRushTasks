@@ -41,7 +41,7 @@ public class Solution {
             int freq = 0;
             int mostFreqElem= 0;
             for (int i = 0; i < 128; i++) {
-                if ()Collections.frequency(list, i);
+                //if ()Collections.frequency(list, i);
             }
 
         }
