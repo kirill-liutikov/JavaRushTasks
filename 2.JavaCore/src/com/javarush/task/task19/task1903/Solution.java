@@ -11,9 +11,9 @@ public class Solution {
     public static Map<String, String> countries = new HashMap<String, String>();
 
     static {
-        countries.putIfAbsent("CA", "CANADA");
-        countries.putIfAbsent("CA", "CANADA");
-        countries.putIfAbsent("CA", "CANADA");
+        countries.putIfAbsent("UA", "Ukraine");
+        countries.putIfAbsent("RU", "Russia");
+        countries.putIfAbsent("CA", "Canada");
     }
 
 
@@ -21,7 +21,40 @@ public class Solution {
 
     }
 
-    public static class IncomeDataAdapter {
+    public static class IncomeDataAdapter implements Customer, Contact{
+
+        private IncomeData data;
+
+        public IncomeDataAdapter(IncomeData data) {
+            this.data = data;
+        }
+
+        @Override
+        public String getCompanyName() {
+            return data.getCompany();
+        }
+
+        @Override
+        public String getCountryName() {
+            return countries.get(data.getCountryCode());
+        }
+
+        @Override
+        public String getName() {
+            return data.getContactLastName()+", "+data.getContactFirstName();
+        }
+
+        @Override
+        public String getPhoneNumber() {
+            String code = data.getCountryCode();
+            String localPhone = String.valueOf(data.getPhoneNumber());
+            String localPhoneForm = ("0000000000"+localPhone).substring(localPhone.length());
+            String phone = "+" + code + localPhone;
+            //String getPhone =
+
+
+            return null;
+        }
     }
 
 
