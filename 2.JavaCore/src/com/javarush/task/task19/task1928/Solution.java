@@ -19,7 +19,7 @@ public class Solution {
                 InputStream is = Solution.class.getClassLoader().getResourceAsStream(args[1]);
         ) {
             ;
-            byte[] b = new byte[is.available()];
+            byte[] b = new byte[is.available()-1];
             outputStream.write(is.read(b));
 
             int value = 123_456_789;
@@ -42,7 +42,7 @@ public class Solution {
                 }
             }
 
-            if (result instanceof A) {
+            if (result instanceof C) {
                 C p = (C) result;
                 System.out.println(p.getClass().getSimpleName());
             }

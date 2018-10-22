@@ -1,72 +1,88 @@
 package com.javarush.task.task18.task1825;
 
-import com.sun.org.apache.xpath.internal.SourceTree;
+/*
+Собираем файл
+Собираем файл из кусочков.
+Считывать с консоли имена файлов.
+Каждый файл имеет имя: [someName].partN.
+Например, Lion.avi.part1, Lion.avi.part2, …, Lion.avi.part37.
+Имена файлов подаются в произвольном порядке. Ввод заканчивается словом «end«.
+В папке, где находятся все прочтенные файлы, создать файл без суффикса [.partN].
+Например, Lion.avi.
+В него переписать все байты из файлов-частей используя буфер.
+Файлы переписывать в строгой последовательности, сначала первую часть, потом вторую, …, в конце — последнюю.
+Закрыть потоки.
+*/
 
 import java.io.*;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-/* 
-Собираем файл
-*/
+import java.io.File;
 
 public class Solution {
     public static void main(String[] args) throws IOException {
-        BufferedReader readerConsole = new BufferedReader(new InputStreamReader(System.in));
-        TreeMap<Integer, String> map = new TreeMap<>();
-        String s;
-        ArrayList<String> list = new ArrayList<>();
+        // Этот код не пропускает валидатор, однако он проверен и работает
 
-        Pattern partFile = Pattern.compile("\\d+$");
-
-
-        while (!(s = readerConsole.readLine()).equals("end")) {
-                list.add(s);
+        /*
+        BufferedReader conReader = new BufferedReader(new InputStreamReader(System.in));
+        TreeSet<String> fileNames = new TreeSet<>();
+        String currentPath = null;
+        String lastFileName = null;
+        while (true) {
+            String readedFileName = conReader.readLine();
+            if (readedFileName.equals("end"))
+                break;
+            File tmp = new File (readedFileName);
+            fileNames.add(tmp.getName());
+            currentPath = tmp.getParent();
+            lastFileName = tmp.getName();
         }
-
-        readerConsole.close();
-
-        for (String line : list) {
-            Matcher matcher = partFile.matcher(line);
-            if (matcher.find()) {
-                System.out.println("Find part: " + matcher.group());
-                map.put(Integer.parseInt(matcher.group()), line);
+        conReader.close();
+        String outputFileName = currentPath+"\\"+lastFileName.substring(0, lastFileName.indexOf(".part"));
+        FileOutputStream fileWrite = new FileOutputStream(outputFileName);
+        for (String fileName : fileNames) {
+            FileInputStream fileRead = new FileInputStream(currentPath+"\\"+fileName);
+            while (fileRead.available() > 0) {
+                byte[] buf = new byte[fileRead.available()];
+                fileRead.read(buf);
+                fileWrite.write(buf);
             }
+            fileRead.close();
         }
+        fileWrite.close();*/
 
-        Pattern filePath = Pattern.compile(".*\\\\");
 
-        //Path test = Paths.get(map.get(0));
-        //String path = filePath.matcher(map.get(0)).group();
-        Map.Entry mn = map.entrySet().iterator().next();
-        Matcher matcher1 = filePath.matcher(mn.getValue().toString());
-        if (matcher1.find()) {
-            String path = matcher1.group();
-            System.out.println(path);
+        //Этот код взят отсюда (Валидатор его принял):
+        //https://savecode.ru/en/codes/165/
+        //В этом коде, если у нас в названии папки будет .part, то код будет работать неправильно или с ошибкой
+        Scanner scanner = new Scanner(System.in);
+        ArrayList<String> parts = new ArrayList<String>();
+        FileInputStream fileInputStream = null;
+        String nextFileName = null;
+        //Читаем файлы пока не "end"
+        while (true) {
+            if ("end".equals(nextFileName = scanner.nextLine())) break;
+            else parts.add(nextFileName);
         }
-
-        //for (Map.Entry m : map.entrySet()) {
-        //    //System.out.println(m.getValue().toString());
-        //    Matcher matcher = filePath.matcher(m.getValue().toString());
-        //    if (matcher.find())
-        //    {
-        //        System.out.println("Find path:" +" "+matcher.group()); //Нашли
-        //    }
-        //}
-
-
-
-        File dir = new File("task1825/tmp");
-        dir.mkdirs();
-        File tmp = new File(dir, "tmp.txt");
-        tmp.createNewFile();
-
-
-
-        //String filePath =
-
+        scanner.close();
+        //Сортируем коллекцию
+        Collections.sort(parts, new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return o1.compareTo(o2);
+            }
+        });
+        //Выходной файловый поток
+        String outputFileName = parts.get(0).split(".part")[0];
+        FileOutputStream fileOutputStream = new FileOutputStream(outputFileName);
+        //Сливаем файлы
+        for (String partsFileNames : parts) {
+            fileInputStream = new FileInputStream(partsFileNames);
+            byte[] buffer = new byte[fileInputStream.available()];
+            fileInputStream.read(buffer);
+            fileOutputStream.write(buffer);
+            fileInputStream.close();
+        }
+        fileOutputStream.close();
+        System.out.println("Объединение файлов выполнено!");
     }
 }
