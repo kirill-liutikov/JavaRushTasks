@@ -12,13 +12,28 @@ public class Solution {
     public static TestString testString = new TestString();
 
     public static void main(String[] args) {
-        PrintStream consoleOut = System.out;
+        PrintStream sout = System.out; // сохраняем ссылку на System.out в sout класса PrintStream
 
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(); // это расширяемый массив
+        PrintStream stream = new PrintStream(byteArrayOutputStream); // закидываем в поток наш массив
+        System.setOut(stream); // подменяем вывод на консоль загонянием в наш поток
+        testString.printSomething(); // выводим в наш массив 5 строк, предназначенных на консоль
 
-        PrintStream ps = new PrintStream(baos);
+        System.setOut(sout); // возвращаем консольный вывод
 
-        System.setOut(ps);
+        String [] st = byteArrayOutputStream.toString().split("\\n"); // режем вывод на консоль по строкам
+        int i = 0;
+        for (String sti : st) { // пока есть строки, что загнаны в наш массив
+            System.out.println(sti); // выводим первую строку
+            i++; // считаем счетчик второй строки
+            if  ((i % 2) == 0) { // если строка третья, то выводим в консоль рекламу
+                System.out.println("JavaRush - курсы Java онлайн");
+            }
+        }
+
+
+
+
     }
 
     public static class TestString {
