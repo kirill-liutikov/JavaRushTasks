@@ -1,17 +1,12 @@
-package com.javarush.task.task19.task1920;
+package com.javarush.task.task19.task1919;
 
 /* 
-Самый богатый
+Считаем зарплаты
 */
 
-import java.awt.*;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Solution {
     public static void main(String[] args) throws IOException {
@@ -31,20 +26,14 @@ public class Solution {
 
         for (String s : list) {
             String[] array = s.split(" ");
+            //System.out.println("Split result "+array[0]+array[1]);
             map.merge(array[0], Double.parseDouble(array[1]), Double::sum);
         }
 
-        double max = map.values().stream().max(Double::compare).get();
+        //Map<String, Double> sortedMap = map.entrySet().stream().sorted().collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (oldValue, newValue) -> oldValue ,LinkedHashMap::new));
+        map.forEach((key, value) -> System.out.println(key + " " + value));
 
-        String[] listMax = map.entrySet().stream().filter(e -> e.getValue() == max).map(Map.Entry::getKey)
-                .toArray(String[]::new);
-        //System.out.println(max);
-        //map.entrySet().forEach(System.out::println);
-
-        Stream<String> stream = Arrays.stream(listMax);
-        stream.forEach(System.out::println);
-
-
+        //sortedMap.entrySet().forEach(System.out::println);
 
 
     }
