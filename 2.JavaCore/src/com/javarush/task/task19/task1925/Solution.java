@@ -5,6 +5,8 @@ package com.javarush.task.task19.task1925;
 */
 
 import java.io.*;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class Solution {
     public static void main(String[] args) throws IOException {
@@ -15,14 +17,12 @@ public class Solution {
 
         BufferedWriter writer = new BufferedWriter(new FileWriter(file2));
 
-        while (reader.ready()) {
-            String[] words = reader.readLine().split(" ");
-            for (String s : words) {
-                if (s.length() > 6 ) {
-                    writer.write(s+",");
-                }
-            }
-        }
+
+
+        String tmp = reader.lines().flatMap(s -> Arrays.stream(s.split(" "))).filter(s -> s.length() >6).collect(Collectors.joining(","));
+        writer.write(tmp);
+        reader.close();
+        writer.close();
 
 
     }
