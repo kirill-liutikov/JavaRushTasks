@@ -12,7 +12,7 @@ public class Solution {
     public static void main(String[] args) {
         //исправьте outputStream/inputStream в соответствии с путем к вашему реальному файлу
         try {
-            File your_file_name = File.createTempFile("C:\\Users\\kirill\\IdeaProjects\\JavaRushTasks\\2.JavaCore\\src\\com\\javarush\\task\\task20\\task2001\\human.bin", null);
+            File your_file_name = new File("C:\\Users\\карамба\\IdeaProjects\\JavaRushTasks\\2.JavaCore\\src\\com\\javarush\\task\\task20\\task2001\\human.bin");
             OutputStream outputStream = new FileOutputStream(your_file_name);
             InputStream inputStream = new FileInputStream(your_file_name);
 
@@ -87,6 +87,8 @@ public class Solution {
                 }
             }
 
+            bufferedWriter.close();
+
         }
 
         public void load(InputStream inputStream) throws Exception {
@@ -99,9 +101,12 @@ public class Solution {
                 if (line.equals("AssetsEmpty")) {
                     return;
                 } else {
-                    line.split(" ");
+                   String[] assetLine = line.split(" ");
+                   assets.add(new Asset(assetLine[0], Double.parseDouble(assetLine[1])));
                 }
             }
+
+            reader.close();
         }
     }
 }
