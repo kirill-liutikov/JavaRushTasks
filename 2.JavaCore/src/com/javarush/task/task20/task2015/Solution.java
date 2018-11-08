@@ -8,8 +8,8 @@ import java.io.Serializable;
 /* 
 Переопределение сериализации
 */
-public class Solution implements {
-    private Thread runner;
+public class Solution implements Serializable, Runnable {
+    private transient Thread runner;
     private int speed;
 
     public Solution(int speed) {
@@ -30,11 +30,15 @@ public class Solution implements {
      Теперь сериализация/десериализация пойдет по нашему сценарию :)
      */
     private void writeObject(ObjectOutputStream out) throws IOException {
+
         out.defaultWriteObject();
     }
 
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
+        runner = new Thread(this);
+        runner.start();
+
     }
 
     public static void main(String[] args) {
