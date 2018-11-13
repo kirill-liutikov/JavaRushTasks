@@ -10,21 +10,18 @@ public class Solution implements Serializable{
 
         protected String nameA = "A";
 
-        public A(String nameA) {
-            this.nameA += nameA;
+        public A () {
+
         }
 
-        public A() {
+        public A(String nameA) {
+            this.nameA += nameA;
         }
     }
 
     public class B extends A implements Serializable {
 
         private String nameB;
-
-        public B (String nameB) {
-            this.nameB = nameB;
-        }
 
         public B(String nameA, String nameB) {
             super(nameA);
@@ -43,12 +40,14 @@ public class Solution implements Serializable{
         }
     }
 
+
+
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         ByteArrayOutputStream arrayOutputStream = new ByteArrayOutputStream();
         ObjectOutputStream oos = new ObjectOutputStream(arrayOutputStream);
 
         Solution solution = new Solution();
-        B b = solution.new B("B2", "C33");
+        B b = solution.new B("B", "C33");
         System.out.println("nameA: " + b.nameA + ", nameB: " + b.nameB);
 
         oos.writeObject(b);
