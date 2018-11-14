@@ -12,19 +12,41 @@ public class Solution {
 
     public static long[] getNumbers(long N) {
 
-        long p = 10;
-        int length = String.valueOf(N).length();
+        //long p = 10;
+        //int length = getLenght1(N);
 
         long armstrongCandidate = 0;
 
         ArrayList<Long> listArmstrong = new ArrayList<>();
 
-        for (long i = 10; i <= N; i++) {
+        ArrayList<Long> listUniq = new ArrayList<>();
+
+        for (long i = 0; i <= N; i++) {
             int digits[] = getDigits(i);
-            for (int digit : digits) {
-                armstrongCandidate = armstrongCandidate + (long) Math.pow(digit, digits.length);
+            if (digits.length > 2) {
+                for (int j = 1; j < digits.length-1; j++) {
+                    if (digits[j-1] >= digits[j] && digits[j] >= digits[j + 1]) {
+                        listUniq.add(i);
+                    }
+                }
             }
-            if (armstrongCandidate == i) listArmstrong.add(armstrongCandidate);
+        }
+
+        //listUniq.forEach(e -> System.out.println(e+" "));
+
+
+        for (Long temp : listUniq) {
+            int digits[] = getDigits(temp);
+                    for (int digit : digits) {
+                        armstrongCandidate = armstrongCandidate + (long) Math.pow(digit, digits.length);
+                    }
+            int armstrongCandidateDigits[] = getDigits(armstrongCandidate);
+            for (int i = 0; i <armstrongCandidateDigits.length ; i++) {
+
+            }
+
+            if (getLenght2(armstrongCandidate) == getLenght2(temp)) listArmstrong.add(armstrongCandidate);
+
             armstrongCandidate = 0;
         }
 
@@ -33,7 +55,7 @@ public class Solution {
         long[] result = new long[listArmstrong.size()];
 
         for (int i = 0; i < result.length; i++) {
-            result[i] = listArmstrong.get(i).longValue();
+            result[i] = listArmstrong.get(i);
         }
 
         return result;
@@ -57,10 +79,25 @@ public class Solution {
         return digits;
     }
 
+    public static int getLenght1(Long N) {
+        return String.valueOf(N).length();
+    }
+
+    public static int getLenght2 (Long N) {
+        long p = 10;
+        for (int i = 0; i < 19 ; i++) {
+            if (N<p) {
+                return i;
+            }
+            p *=10;
+        }
+        return 19;
+    }
+
 
     public static void main(String[] args) {
         long startTime = System.nanoTime();
-        long n[] = getNumbers(20000000);
+        long n[] = getNumbers(200);
         long endTime = System.nanoTime();
         long total = endTime - startTime;
         for (int i = 0; i < n.length; i++) {
@@ -68,6 +105,8 @@ public class Solution {
         }
         double totalSec = (double) total/1_000_000_000.;
         System.out.println("\n\r"+totalSec);
-        System.out.println("\n\r"+total);
+
+
+
     }
 }
