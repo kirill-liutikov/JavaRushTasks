@@ -39,7 +39,7 @@ public class Util {
             }
 
             @Override
-            public int getLenght() {
+            public int getLength() {
                 return lenght;
             }
 
