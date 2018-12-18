@@ -21,7 +21,7 @@ public class DaemonTest {
 class WorkerThread extends Thread {
 
     public WorkerThread() {
-        setDaemon(true);
+        setDaemon(false);
     }
 
     public void run() {
