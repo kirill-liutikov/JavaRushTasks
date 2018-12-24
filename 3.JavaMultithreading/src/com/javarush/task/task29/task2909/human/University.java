@@ -41,7 +41,7 @@ public class University {
         this.students = students;
     }
 
-    public Student getStudentWithAverageGrade() {
+    public Student getStudentWithAverageGrade(double grade) {
         //TODO:
         return null;
     }
