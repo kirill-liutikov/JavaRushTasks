@@ -2,7 +2,7 @@ package com.javarush.task.task29.task2909.car;
 
 import java.util.Date;
 
-public class Car {
+public abstract class Car {
     static public final int TRUCK = 0;
     static public final int SEDAN = 1;
     static public final int CABRIOLET = 2;
@@ -18,34 +18,57 @@ public class Car {
     private boolean driverAvailable;
     private int numberOfPassengers;
 
-    public Car(int type, int numberOfPassengers) {
+    static final int MAX_TRUCK_SPEED = 80;
+    static final int MAX_SEDAN_SPEED = 120;
+    static final int MAX_CABRIOLET_SPEED = 90;
+
+    protected Car(int type, int numberOfPassengers) {
         this.type = type;
         this.numberOfPassengers = numberOfPassengers;
     }
 
-    public int fill(double numberOfLiters) {
+    public static Car create(int type, int numberOfPassengers) {
+        if (type == 0) return new Truck(numberOfPassengers);
+        if (type == 1) return new Sedan(numberOfPassengers);
+        if (type == 2) return new Cabriolet(numberOfPassengers);
+        else return null;
+    }
+
+    public void fill(double numberOfLiters) throws Exception {
         if (numberOfLiters < 0)
-            return -1;
+            throw new Exception();
         fuel += numberOfLiters;
-        return 0;
+    }
+
+    public boolean isSummer(Date date, Date summerStart, Date summerEnd) {
+        return !(date.before(summerStart) || date.after(summerEnd));
+    }
+
+    public double getWinterConsumption(int length) {
+        return length*winterFuelConsumption + winterWarmingUp;
+    }
+
+    public double getSummerConsumption(int lenght) {
+        return lenght*summerFuelConsumption;
     }
 
     public double getTripConsumption(Date date, int length, Date SummerStart, Date SummerEnd) {
         double consumption;
-        if (date.before(SummerStart) || date.after(SummerEnd)) {
-            consumption = length * winterFuelConsumption + winterWarmingUp;
+        if (!isSummer(date, SummerStart, SummerEnd)) {
+            consumption = getWinterConsumption(length);
         } else {
-            consumption = length * summerFuelConsumption;
+            consumption = getSummerConsumption(length);
         }
         return consumption;
     }
 
-    public int getNumberOfPassengersCanBeTransferred() {
-        if (!isDriverAvailable())
-            return 0;
-        if (fuel <= 0)
-            return 0;
+    private boolean canPassengersBeTransferred() {
+        return isDriverAvailable() && fuel > 0;
+    }
 
+    public int getNumberOfPassengersCanBeTransferred() {
+        if (!canPassengersBeTransferred())
+            return 0;
         return numberOfPassengers;
     }
 
@@ -60,10 +83,8 @@ public class Car {
     public void startMoving() {
         if (numberOfPassengers > 0) {
             fastenPassengersBelts();
-            fastenDriverBelt();
-        } else {
-            fastenDriverBelt();
         }
+        fastenDriverBelt();
     }
 
     public void fastenPassengersBelts() {
@@ -72,11 +93,13 @@ public class Car {
     public void fastenDriverBelt() {
     }
 
-    public int getMaxSpeed() {
+    /*public int getMaxSpeed() {
         if (type == TRUCK)
-            return 80;
+            return MAX_TRUCK_SPEED;
         if (type == SEDAN)
-            return 120;
-        return 90;
-    }
+            return MAX_SEDAN_SPEED;
+        return MAX_CABRIOLET_SPEED;
+    }*/
+
+    public abstract int getMaxSpeed();
 }
